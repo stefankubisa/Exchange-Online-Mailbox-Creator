@@ -1,5 +1,5 @@
 # Mailbox-Creator
-Creates Shared Mailboxes in AzureAD Adding Users and Aliases
+Creates Shared Mailboxes in Exchange Online Adding Users and Aliases
 
 ## HowTo ##
 1) Open the script
