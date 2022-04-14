@@ -2,7 +2,16 @@
 Creates Shared Mailboxes in Exchange Online Adding Users and Aliases
 
 ## HowTo ##
-1) Open the script
+1) Open the script by exacuting it with the following 3 parameters:
+
+| Script File | Absolute Path to Spreadsheet | Sheet you want to use |
+|----------|----------|----------|
+| .\MailboxCreator.ps1 | "C:\Users\StefanKubisa\Documents\Scripts\SharedMailboxCreation.xlsx" | Sheet1 | 
+
+Like so: 
+
+.\MailboxCreator.ps1 "C:\Users\StefanKubisa\Documents\Scripts\SharedMailboxCreation.xlsx" Sheet1
+
 2) Make sure the static values match your worksheet's colum
 
 | Status | Display Name | Mailbox | User 1 / Alias 1 | User 2 / Alias 2 | User 3 / Alias 3 |
