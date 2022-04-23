@@ -55,9 +55,11 @@
 # ----------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------
-cls
-
+# Execution policy options
 # Set-ExecutionPolicy Bypass -Scope Process
+# Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
+
+cls
 
 # Installing nuget and exchang online goes here 
 
@@ -104,9 +106,23 @@ $verticalCount = (($Worksheet.UsedRange.Rows).count - 1 )
 $horizontalCount = ($Worksheet.UsedRange.Columns).count - 3
 $mailboxCount = $verticalCount
 Write-Host -ForegroundColor DarkGreen "Mailbox Count: $mailboxCount"
-Write-Host "If this makes sense press any key, if not CTRL + C"
-$Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-Write-Host ""
+$proceed = Read-Host "
+If this makes sense and you ran this script previously/have the Exchange Online module installed press 1 
+to install the module press 2 
+to abort press 3"
+switch ($proceed) {
+    1 {
+        continue
+    }
+    2 {
+        Install-Module PowerShellGet
+        Install-Module -Name ExchangeOnlineManagement -Scope AllUsers 
+    }
+    3 {
+        $excel.Quit()
+        exit
+    }
+}
 
 Write-Host "
 Which authentication method would you like to use:
