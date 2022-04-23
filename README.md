@@ -2,7 +2,7 @@
 Creates Shared Mailboxes in Exchange Online Adding Users and Aliases
 
 ## HowTo ##
-1) Open the script by exacuting it with the following 3 parameters:
+# 1) Open the script by exacuting it with the following 3 parameters:
 
 | Script File | Absolute Path to Spreadsheet | Sheet you want to use |
 |----------|----------|----------|
@@ -22,7 +22,7 @@ Use cases are
 6. Add aliases to mailboxes only
 7. Add users and aliases to a mailbox
 
-2) Make sure the static values match your worksheet's colum
+# 2) Make sure the static values match your worksheet's colum
 
 Case 1 and 7
 
