@@ -1,52 +1,33 @@
 # MAIN PIECES OF LOGIC USED
+# ----------------------------------------------------------------------------------------------------
 # New-Mailbox -Shared -Name "$Email" -DisplayName "$DisplayName" -PrimarySmtPAddress "$Email" -Alias $EmailFront
 # Set-Mailbox -Identity $Email -EmailAddress @{Add= "$Alias"}
 # Add-MailboxPermission -Identity $Email -User $UPN -AccessRights FullAccess -InheritanceType All 
 # Add-RecipientPermission "$Email" -AccessRights SendAs -Trustee "$UPN" -Confirm:$false
 
-# ADDITIONAL LOGIC THAT MIGHT BE USEFULL IF THE ADDRESS IS ALREADY TAKEN
-# try {
-#     Remove-Mailbox $Email -Confirm:$false
-#     Write-Host -ForegroundColor Red "_____________________________" 
-#     Write-Host -ForegroundColor Red "Removing $Email Mailbox" 
-#     Write-Host -ForegroundColor Red "-----------------------------" 
-# }
-# catch {
-#     Write-Host "Didn't exist, creating new "
-# }
-# try {
-#     Remove-DistributionGroup -Identity $Email -Confirm:$false
-#     Write-Host -ForegroundColor Red "_____________________________" 
-#     Write-Host -ForegroundColor Red "Removing $Email Distribution Group" 
-#     Write-Host -ForegroundColor Red "-----------------------------" 
-# }
-# catch {
-#     Write-Host "Didn't exist, creating new "
-# }
-
 # USAGE
-
+# ----------------------------------------------------------------------------------------------------
 # .\MailboxCreator.ps1	"C:\Users\StefanKubisa\Documents\Scripts\SharedMailboxCreation.xlsx"	Sheet1
 
 # Adding mailboxes, users and aliases
-
-# Status	    Display Name                Mailbox	                        User 1 / Alias 1	                    User 2 / Alias 2	                    User 3 / Alias 3
-#               Automation Test Mailbox 1	test.automailbox.1@domain.com	name.surname@domain.com	                name2.surname2@domain.com	            name3.surname3@domain.com
-#               Automation Test Mailbox 1	test.automailbox.1@domain.com	test.automailbox.1.alias1@domain.com	test.automailbox.1.alias2@domain.com	test.automailbox.1.alias3@domain.com
-#               Automation Test Mailbox 2	test.automailbox.2@domain.com	name.surname@domain.com	                name2.surname2@domain.com	            name3.surname3@domain.com
-#               Automation Test Mailbox 2	test.automailbox.2@domain.com	test.automailbox.2.alias1@domain.com	test.automailbox.2.alias2@domain.com	test.automailbox.2.alias3@domain.com
+# ----------------------------------------------------------------------------------------------------
+# Status	Display Name    Mailbox	                User 1 / Alias 1	            User 2 / Alias 2	            User 3 / Alias 3
+#           Mailbox1	    mailbox1@domain.com	    name@domain.com	                name2@domain.com	            name3@domain.com
+#           Mailbox1	    mailbox1@domain.com	    mailbox1.alias1@domain.com	    mailbox1.alias2@domain.com	    mailbox1.alias3@domain.com
+#           Mailbox2	    mailbox2@domain.com	    name@domain.com	                name2@domain.com	            name3@domain.com
+#           Mailbox2	    mailbox2@domain.com	    mailbox2.alias1@domain.com	    mailbox2.alias2@domain.com	    mailbox2.alias3@domain.com
 
 # Adding users to mailboxes
-
-# Status	    Display Name                Mailbox	                        User 1 	                                User 2 	                                User 3 
-#               Automation Test Mailbox 1	test.automailbox.1@domain.com	name.surname@domain.com	                name2.surname2@domain.com	            name3.surname3@domain.com
-#               Automation Test Mailbox 2	test.automailbox.2@domain.com	name.surname@domain.com	                name2.surname2@domain.com	            name3.surname3@domain.com
+# ----------------------------------------------------------------------------------------------------
+# Status	Display Name    Mailbox	                User 1 	            User 2 	             User 3 
+#           Mailbox 1	    mailbox1@domain.com	    name@domain.com	    name2@domain.com     name3@domain.com
+#           Mailbox 2	    mailbox2@domain.com	    name@domain.com	    name2@domain.com	 name3@domain.com
 
 # Adding aliases to mailboxes
-
-# Status	    Display Name                Mailbox	                        Alias 1	                                Alias 2	                                Alias 3
-#               Automation Test Mailbox 1	test.automailbox.1@domain.com	test.automailbox.1.alias1@domain.com	test.automailbox.1.alias2@domain.com	test.automailbox.1.alias3@domain.com
-#               Automation Test Mailbox 2	test.automailbox.2@domain.com	test.automailbox.2.alias1@domain.com	test.automailbox.2.alias2@domain.com	test.automailbox.2.alias3@domain.com
+# ----------------------------------------------------------------------------------------------------
+# Status	Display Name    Mailbox	                Alias 1	                        Alias 2	                        Alias 3
+#           Mailbox 1	    mailbox1@domain.com	    mailbox1.alias1@domain.com	    mailbox1.alias2@domain.com	    mailbox1.alias3@domain.com
+#           Mailbox 2	    mailbox2@domain.com	    mailbox2.alias1@domain.com	    mailbox2.alias2@domain.com	    mailbox2.alias3@domain.com
 
 # ----------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------
@@ -55,13 +36,13 @@
 # ----------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------
+
 # Execution policy options
+# ----------------------------------------------------------------------------------------------------
 # Set-ExecutionPolicy Bypass -Scope Process
 # Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
 
 cls
-
-# Installing nuget and exchang online goes here 
 
 $IsItDone_Pos = 1
 $DisplayName_Pos = 2
@@ -185,6 +166,26 @@ while ($keepGoing) {
         Write-Host -ForegroundColor DarkGreen "$DisplayName" 
         Write-Host -ForegroundColor DarkGreen "$Email" 
         Write-Host -ForegroundColor DarkGreen "-----------------------------" 
+
+        # ADDITIONAL LOGIC THAT MIGHT BE USEFULL IF THE ADDRESS IS ALREADY TAKEN
+        # try {
+        #     Remove-Mailbox $Email -Confirm:$false
+        #     Write-Host -ForegroundColor Red "_____________________________" 
+        #     Write-Host -ForegroundColor Red "Removing $Email Mailbox" 
+        #     Write-Host -ForegroundColor Red "-----------------------------" 
+        # }
+        # catch {
+        #     Write-Host "Didn't exist, creating new "
+        # }
+        # try {
+        #     Remove-DistributionGroup -Identity $Email -Confirm:$false
+        #     Write-Host -ForegroundColor Red "_____________________________" 
+        #     Write-Host -ForegroundColor Red "Removing $Email Distribution Group" 
+        #     Write-Host -ForegroundColor Red "-----------------------------" 
+        # }
+        # catch {
+        #     Write-Host "Didn't exist, creating new "
+        # }
 
         if($case -eq 1 -or $case -eq 2 -or $case -eq 3 -or $case -eq 4) { 
             New-Mailbox -Shared -Name "$Email" -DisplayName "$DisplayName" -PrimarySmtPAddress "$Email" -Alias $EmailFront 
