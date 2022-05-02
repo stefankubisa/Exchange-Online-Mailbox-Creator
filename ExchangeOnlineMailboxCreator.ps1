@@ -42,7 +42,7 @@
 # Set-ExecutionPolicy Bypass -Scope Process
 # Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
 
-cls
+Clear-Host
 
 $IsItDone_Pos = 1
 $DisplayName_Pos = 2
@@ -145,7 +145,7 @@ What would you like to do:
 6. Add aliases to mailboxes only
 7. Add users and aliases to a mailbox" 
 
-$case = Read-Host "It's time to choose"
+$case = Read-Host "It's time to choose" 
 
 $keepGoing = $true
 while ($keepGoing) {
@@ -155,9 +155,9 @@ while ($keepGoing) {
         }
         $Worksheet.Cells.Item($i + 1, $IsItDone_Pos) = "In Progress"
         $Worksheet.Cells.Item($i + 1, $IsItDone_Pos).Interior.ColorIndex = 44
-        $DisplayName = $Worksheet.Cells.Item($i + 1, $DisplayName_Pos).Text 
-        $Email = $Worksheet.Cells.Item($i + 1, $Email_Pos).Text 
-        $User = $Worksheet.Cells.Item($i + 1, $User_Or_Alias_Pos).Text 
+        $DisplayName = $Worksheet.Cells.Item($i + 1, $DisplayName_Pos).Text.trim() 
+        $Email = $Worksheet.Cells.Item($i + 1, $Email_Pos).Text.trim() 
+        $User = $Worksheet.Cells.Item($i + 1, $User_Or_Alias_Pos).Text.trim() 
         $EmailSplit = ($Email).split("@") 
         $TextInfo = (Get-Culture).TextInfo 
         $EmailFront = $TextInfo.ToTitleCase($EmailSplit[0]) 
@@ -167,36 +167,35 @@ while ($keepGoing) {
         Write-Host -ForegroundColor DarkGreen "$Email" 
         Write-Host -ForegroundColor DarkGreen "-----------------------------" 
 
-        # ADDITIONAL LOGIC THAT MIGHT BE USEFULL IF THE ADDRESS IS ALREADY TAKEN
-        # try {
-        #     Remove-Mailbox $Email -Confirm:$false
-        #     Write-Host -ForegroundColor Red "_____________________________" 
-        #     Write-Host -ForegroundColor Red "Removing $Email Mailbox" 
-        #     Write-Host -ForegroundColor Red "-----------------------------" 
-        # }
-        # catch {
-        #     Write-Host "Didn't exist, creating new "
-        # }
-        # try {
-        #     Remove-DistributionGroup -Identity $Email -Confirm:$false
-        #     Write-Host -ForegroundColor Red "_____________________________" 
-        #     Write-Host -ForegroundColor Red "Removing $Email Distribution Group" 
-        #     Write-Host -ForegroundColor Red "-----------------------------" 
-        # }
-        # catch {
-        #     Write-Host "Didn't exist, creating new "
-        # }
-
         if($case -eq 1 -or $case -eq 2 -or $case -eq 3 -or $case -eq 4) { 
+            # ADDITIONAL LOGIC THAT MIGHT BE USEFULL IF THE ADDRESS IS ALREADY TAKEN
+            # try {
+            #     Remove-Mailbox $Email -Confirm:$false
+            #     Write-Host -ForegroundColor Red "_____________________________" 
+            #     Write-Host -ForegroundColor Red "Removing $Email Mailbox" 
+            #     Write-Host -ForegroundColor Red "-----------------------------" 
+            # }
+            # catch {
+            #     Write-Host "Didn't exist, creating new "
+            # }
+            # try {
+            #     Remove-DistributionGroup -Identity $Email -Confirm:$false
+            #     Write-Host -ForegroundColor Red "_____________________________" 
+            #     Write-Host -ForegroundColor Red "Removing $Email Distribution Group" 
+            #     Write-Host -ForegroundColor Red "-----------------------------" 
+            # }
+            # catch {
+            #     Write-Host "Didn't exist, creating new "
+            # }
             New-Mailbox -Shared -Name "$Email" -DisplayName "$DisplayName" -PrimarySmtPAddress "$Email" -Alias $EmailFront 
         } 
 
         if($case -eq 1 -or $case -eq 2 -or $case -eq 5 -or $case -eq 7) {
             for ($j = 0; $j -lt $horizontalCount; $j++) {
-                if (($Worksheet.Cells.Item($i + 1, $j + 4).Text -eq "")) {
+                if ($Worksheet.Cells.Item($i + 1, $j + 4).Text -eq "") {
                     continue
                 }
-                $User = $Worksheet.Cells.Item($i + 1, $j + 4).Text 
+                $User = $Worksheet.Cells.Item($i + 1, $j + 4).Text.trim() 
                 
                 Write-Host -ForegroundColor Blue "_____________________________" 
                 Write-Host -ForegroundColor Blue "Adding Read Access to Shared Mailbox $DisplayName for User with the Email $User"
@@ -225,10 +224,10 @@ while ($keepGoing) {
 
         if($case -eq 1 -or $case -eq 3 -or $case -eq 6 -or $case -eq 7) {
             for ($j = 0; $j -lt $horizontalCount; $j++) {
-                if (($Worksheet.Cells.Item($i + 1, $j + 4).Text -eq "")) {
+                if ($Worksheet.Cells.Item($i + 1, $j + 4).Text -eq "") {
                     continue
                 }
-                $Alias = $Worksheet.Cells.Item($i + 1, $j + 4).Text 
+                $Alias = $Worksheet.Cells.Item($i + 1, $j + 4).Text.trim() 
                 
                 Write-Host -ForegroundColor Blue "_____________________________" 
                 Write-Host -ForegroundColor Blue "Adding Alias: $Alias to Shared Mailbox with the Email $Email"
